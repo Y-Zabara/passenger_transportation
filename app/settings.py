@@ -14,3 +14,6 @@ class DbConfig(BaseModel):
 class Config(BaseSettings):
     run: RunConfig = RunConfig()
     db: DbConfig
+
+
+config = Config()
