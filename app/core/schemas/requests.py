@@ -1,5 +1,5 @@
 from datetime import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class RequestBase(BaseModel):
@@ -18,4 +18,7 @@ class RequestCreate(RequestBase):
 class RequestPublic(RequestBase):
     id: int
     status: str
-    created_at: datetime
+
+    model_config = ConfigDict(
+        from_attributes=True,
+    )

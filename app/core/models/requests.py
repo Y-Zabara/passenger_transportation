@@ -29,9 +29,9 @@ class Requests(Base, IntPkMixin):
     end_point: Mapped[str] = mapped_column(String(64))
 
     # TODO: make Mapped
-    desired_trip_date = mapped_column(DateTime)
+    desired_trip_date = mapped_column(DateTime(timezone=True))
 
     notes: Mapped[str | None] = mapped_column(Text)
-    status: Mapped[RequestStatus] = mapped_column(Enum(RequestStatus))
+    status: Mapped[RequestStatus] = mapped_column(default=RequestStatus.pending)
 
     # TODO Add relationships
