@@ -1,19 +1,13 @@
-import enum
-
-from sqlalchemy import DateTime, String, Enum, Text
+from sqlalchemy import DateTime, String, Text
 from sqlalchemy.orm import (
     Mapped,
     mapped_column,
 )
 
+from core.types import RequestStatus
+
 from .base import Base
 from .mixins.int_pk_mixin import IntPkMixin
-
-
-class RequestStatus(enum.Enum):
-    pending: str = "pending"
-    canceled: str = "canceled"
-    confirmed: str = "confirmed"
 
 
 # TODO Add timestamp mixin
