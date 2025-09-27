@@ -18,6 +18,15 @@ async def get_user_by_id(
     return await session.get(Users, id)
 
 
+async def get_user_by_phone(
+    session: AsyncSession,
+    phone: str,
+    ) -> Users | None:
+    # TODO: check
+    return await session.query(Users).filter_by(phone=phone).first()
+
+
+# TODO: handle unic phone fild
 async def create_user(
     session: AsyncSession,
     user_in: UserCreate,
@@ -30,6 +39,7 @@ async def create_user(
     return user
 
 
+# TODO: handle unic phone fild
 async def update_user(
     session: AsyncSession,
     user: Users,

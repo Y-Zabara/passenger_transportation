@@ -24,7 +24,20 @@ async def user_by_id(
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"Product {id} not found",
+        detail=f"User with {id} not found",
+    )
+
+async def user_by_phone(
+    phone: Annotated[str, Path],
+    session: SessionDependence,
+    ) -> Users:
+    user: Users = await crud_users.get_user_by_phone(id=phone, session=session)
+    if user is not None:
+        return user
+
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"User with {id} not found",
     )
 
 UserDependence = Annotated[UserPublic, Depends(user_by_id)]
