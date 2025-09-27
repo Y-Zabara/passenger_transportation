@@ -7,7 +7,7 @@ class RequestStatus(Enum):
     confirmed: str = "confirmed"
 
 
-class UserRole(Enum):
+class UserRole(str, Enum):
     user: str = "user"
     operator: str = "operator"
     admin: str = "admin"
