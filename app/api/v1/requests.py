@@ -1,34 +1,15 @@
-from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Path, status
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import db_helper
-from core.models.requests import Requests
 from core.schemas.requests import RequestCreate, RequestPublic
+from api.dependencies import SessionDependence, RequestDependence
 import crud.requests as crud_requests
+
 
 
 router = APIRouter(
     prefix="/requests",
     tags=["requests"],
 )
-
-
-SessionDependence = Annotated[AsyncSession, Depends(db_helper.session_getter)]
-
-async def request_by_id(
-    id: Annotated[int, Path],
-    session: SessionDependence,
-    ) -> Requests:
-    request: Requests = await crud_requests.get_request_by_id(id=id, session=session)
-    if request is not None:
-        return request
-
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"Product {id} not found",
-    )
-RequestDependence = Annotated[RequestPublic, Depends(request_by_id)]
 
 
 @router.get("", response_model=list[RequestPublic])

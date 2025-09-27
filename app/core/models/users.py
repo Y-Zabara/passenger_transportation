@@ -23,6 +23,7 @@ class Users(Base, IntPkMixin):
     hashed_password: Mapped[str]
 
     role: Mapped[UserRole] = mapped_column(default=UserRole.user)
+    active: Mapped[bool] = mapped_column(default=True)
 
     # TODO: Add relationships
 

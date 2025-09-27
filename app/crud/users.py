@@ -15,7 +15,6 @@ async def get_user_by_id(
     session: AsyncSession,
     id: int,
     ) -> Users | None:
-
     return await session.get(Users, id)
 
 

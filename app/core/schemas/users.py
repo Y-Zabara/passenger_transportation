@@ -23,6 +23,7 @@ class UserUpdate(UserCreate):
 class UserPublic(UserBase):
     id: int
     hashed_password: str
+    active: bool
 
 
 class UserLogin(BaseModel):
