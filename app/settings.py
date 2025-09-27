@@ -4,7 +4,7 @@ from pydantic import BaseModel, PostgresDsn
 from pathlib import Path
 
 
-BASE_DIR = Path(__file__).parent()
+BASE_DIR = Path(__file__).parent
 
 class RunConfig(BaseModel):
     host: str = "0.0.0.0"
