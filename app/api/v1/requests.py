@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Path, status
 
 from core.schemas.requests import RequestCreate, RequestPublic
-from api.dependencies import SessionDependence, RequestDependence
+from api.dependencies.base import SessionDependence, RequestDependence
 import crud.requests as crud_requests
 
 

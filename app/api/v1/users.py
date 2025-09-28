@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Path, status
 
 from core.schemas.users import UserCreate, UserPublic, UserRegistr
-from api.dependencies import SessionDependence, UserDependence
+from api.dependencies.base import SessionDependence, UserDependence
 from core.auth.utils import hash_password
 import crud.users as crud_users
 
