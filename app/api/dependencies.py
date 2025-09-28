@@ -31,7 +31,7 @@ async def user_by_phone(
     phone: Annotated[str, Path],
     session: SessionDependence,
     ) -> Users:
-    user: Users = await crud_users.get_user_by_phone(id=phone, session=session)
+    user: Users = await crud_users.get_user_by_phone(phone=phone, session=session)
     if user is not None:
         return user
 

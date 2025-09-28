@@ -13,7 +13,7 @@ from fastapi.security import (
 from pydantic import BaseModel
 
 from core.models.users import Users
-from auth import utils as auth_utils
+from core.auth import utils as auth_utils
 from api.dependencies import user_by_id, user_by_phone, SessionDependence
 
 # http_bearer = HTTPBearer()
@@ -30,16 +30,16 @@ class TokenInfo(BaseModel):
 router = APIRouter(prefix="/auth/jwt", tags=["JWT"])
 
 
-def authenticate_user(
+async def authenticate_user(
     username: str,
     password: str,
-    session: SessionDependence,
+    session,
 ):
     unauthed_exc = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="invalid username or password",
     )
-    if not (user := user_by_phone(session=session, phone=username)):
+    if not (user := await user_by_phone(session=session, phone=username)):
         raise unauthed_exc
 
     if not auth_utils.validate_password(
@@ -100,10 +100,11 @@ def get_current_active_auth_user(
 
 
 @router.post("/login", response_model=TokenInfo)
-def auth_user_issue_jwt(
+async def auth_user_issue_jwt(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    session: SessionDependence,
 ):
-    user = authenticate_user(form_data.userame, form_data.password)
+    user = await authenticate_user(form_data.username, form_data.password, session=session)
     jwt_payload = {
         # subject
         "sub": user.id,

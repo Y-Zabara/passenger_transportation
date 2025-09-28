@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Path, status
 
 from core.schemas.users import UserCreate, UserPublic, UserRegistr
 from api.dependencies import SessionDependence, UserDependence
+from core.auth.utils import hash_password
 import crud.users as crud_users
 
 
@@ -33,7 +34,9 @@ async def create_user(
     user_in: UserRegistr,
     session: SessionDependence,
     ):
-    user: UserCreate = UserCreate(**user_in.dict(exclude={"password"}), hashed_password="hashed_password")
+    user: UserCreate = UserCreate(
+        **user_in.dict(exclude={"password"}),
+        hashed_password=hash_password(user_in.password))
     return await crud_users.create_user(
         session=session,
         user_in=user,

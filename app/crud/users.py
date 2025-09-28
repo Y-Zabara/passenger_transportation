@@ -23,7 +23,9 @@ async def get_user_by_phone(
     phone: str,
     ) -> Users | None:
     # TODO: check
-    return await session.query(Users).filter_by(phone=phone).first()
+    stmt = select(Users).where(Users.phone == phone)
+    result = await session.execute(stmt)
+    return result.scalars().first() 
 
 
 # TODO: handle unic phone fild

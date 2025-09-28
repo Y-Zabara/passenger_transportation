@@ -57,6 +57,7 @@ class Config(BaseSettings):
 
     run: RunConfig = RunConfig()
     db: DbConfig = DbConfig()
+    auth_jwt: AuthConfig = AuthConfig()
 
 
 config = Config()
