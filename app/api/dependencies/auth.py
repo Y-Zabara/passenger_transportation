@@ -9,6 +9,7 @@ from fastapi.security import (
     OAuth2PasswordBearer,
 )
 
+from core.schemas.users import UserPublic
 from core.models.users import Users
 from core.auth import utils as auth_utils
 from api.dependencies.base import user_by_id, user_by_phone, SessionDependence
@@ -22,7 +23,7 @@ async def authenticate_user(
     username: str,
     password: str,
     session,
-):
+) :
     unauthed_exc = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="invalid username or password",
@@ -89,3 +90,4 @@ async def get_current_active_auth_user(
 
 CurrentActiveUserDependence = Annotated[Users, get_current_active_auth_user]
 AuthUserDependence = Annotated[Users, authenticate_user]
+JWTPayloadDependence = Annotated[dict, get_current_token_payload]

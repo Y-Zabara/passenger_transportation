@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class RequestStatus(Enum):
+class RequestStatus(str, Enum):
     pending: str = "pending"
     canceled: str = "canceled"
     confirmed: str = "confirmed"
