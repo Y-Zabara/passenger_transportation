@@ -33,7 +33,7 @@ async def auth_user_issue_jwt(
     user = await authenticate_user(form_data.username, form_data.password, session=session)
     jwt_payload = {
         # subject
-        "sub": user.id,
+        "sub": str(user.id),
         "username": user.phone,
         # "logged_in_at"
     }
@@ -46,9 +46,9 @@ async def auth_user_issue_jwt(
 
 @router.get("/me")
 def auth_user_check_self_info(
-    payload: dict = Depends(get_current_token_payload),
+    #payload: dict = Depends(get_current_token_payload),
     user = Depends(get_current_active_auth_user),
 ):
     return {
-        "username": user.username,
+        "username": user.name,
     }

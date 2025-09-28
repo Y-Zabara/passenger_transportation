@@ -11,7 +11,7 @@ from fastapi.security import (
 
 from core.models.users import Users
 from core.auth import utils as auth_utils
-from api.dependencies import user_by_id, user_by_phone, SessionDependence
+from api.dependencies.base import user_by_id, user_by_phone, SessionDependence
 
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="/api/v1/auth/jwt/login",
@@ -62,12 +62,12 @@ def get_current_token_payload(
     return payload
 
 
-def get_current_auth_user(
+async def get_current_auth_user(
     session: SessionDependence,
     payload: dict = Depends(get_current_token_payload),
 ):
     user_id: str | None = payload.get("sub")
-    if (user := user_by_id(id=user_id, session=session)):
+    if (user := await user_by_id(id=int(user_id), session=session)):
         return user
 
     raise HTTPException(
@@ -76,7 +76,7 @@ def get_current_auth_user(
     )
 
 
-def get_current_active_auth_user(
+async def get_current_active_auth_user(
     user = Depends(get_current_auth_user),
 ):
     if user.active:
