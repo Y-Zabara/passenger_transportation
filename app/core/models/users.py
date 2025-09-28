@@ -17,12 +17,13 @@ class Users(Base, IntPkMixin):
     name: Mapped[str] = mapped_column(String(64))
     surname: Mapped[str | None] = mapped_column(String(64))
     # TODO validate phone
-    phone: Mapped[str]
+    phone: Mapped[str] = mapped_column(unique=True)
 
     # TODO: check
     hashed_password: Mapped[str]
 
     role: Mapped[UserRole] = mapped_column(default=UserRole.user)
+    active: Mapped[bool] = mapped_column(default=True)
 
     # TODO: Add relationships
 

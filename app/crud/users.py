@@ -15,10 +15,20 @@ async def get_user_by_id(
     session: AsyncSession,
     id: int,
     ) -> Users | None:
-
     return await session.get(Users, id)
 
 
+async def get_user_by_phone(
+    session: AsyncSession,
+    phone: str,
+    ) -> Users | None:
+    # TODO: check
+    stmt = select(Users).where(Users.phone == phone)
+    result = await session.execute(stmt)
+    return result.scalars().first() 
+
+
+# TODO: handle unic phone fild
 async def create_user(
     session: AsyncSession,
     user_in: UserCreate,
@@ -31,6 +41,7 @@ async def create_user(
     return user
 
 
+# TODO: handle unic phone fild
 async def update_user(
     session: AsyncSession,
     user: Users,
